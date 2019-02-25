@@ -46,7 +46,7 @@ class AuthController extends Controller
 
         return response()->json([
             'access_token' => $tokenResult->accessToken,
-            'token_type' => 'Bearer'
+            'expires_at' => $tokenResult->token->expires_at->toDateTimeString()
         ]);
     }
 
@@ -56,5 +56,9 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Successfully signed out!'
         ]);
+    }
+
+    public function user(Request $request) {
+        return response()->json($request->user());
     }
 }
