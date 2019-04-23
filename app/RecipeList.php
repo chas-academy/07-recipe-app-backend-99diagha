@@ -6,9 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class RecipeList extends Model
 {
-    protected $guarded = [];
-
-    public function recipes() {
+    public function recipes()
+    {
         return $this->hasMany(Recipe::class);
     }
 }

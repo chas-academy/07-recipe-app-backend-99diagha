@@ -13,13 +13,14 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('signin', 'AuthController@signin');
-Route::post('signup', 'AuthController@signup');
+Route::post('login', 'AuthController@login');
+Route::post('register', 'AuthController@register');
 
 Route::group([
     'middleware' => ['auth:api']
 ], function() {
-    Route::get('signout', 'AuthController@signout');
-    Route::get('user', 'AuthController@user');
+    Route::get('logout', 'AuthController@logout');
+    Route::get('saved', 'RecipeListController@index');
+    Route::post('saved', 'RecipeListController@store');
 });
 

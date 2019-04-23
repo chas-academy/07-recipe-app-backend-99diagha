@@ -8,12 +8,12 @@ use App\User;
 
 class AuthController extends Controller
 {
-    public function signup(Request $request)
+    public function register(Request $request)
     {
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users',
-            'password' => 'required|string'
+            'password' => 'required|string|confirmed'
         ]);
         $user = new User([
             'name' => $request->name,
@@ -26,15 +26,14 @@ class AuthController extends Controller
         ], 201);
     }
 
-    public function signin(Request $request)
+    public function login(Request $request)
     {
-        $request->validate([
+        $credentials = $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string'
         ]);
-        $credentials = request(['email', 'password']);
 
-        if(!Auth::attempt($credentials))
+        if(!auth()->attempt($credentials))
             return response()->json([
                 'message' => 'Unauthorized'
             ], 401);
@@ -50,15 +49,11 @@ class AuthController extends Controller
         ]);
     }
 
-    public function signout(Request $request)
+    public function logout(Request $request)
     {
         $request->user()->token()->revoke();
         return response()->json([
             'message' => 'Successfully signed out!'
         ]);
-    }
-
-    public function user(Request $request) {
-        return response()->json($request->user());
     }
 }

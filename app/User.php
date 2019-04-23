@@ -28,4 +28,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function recipe_list()
+    {
+        return $this->hasOne(RecipeList::class);
+    }
 }
