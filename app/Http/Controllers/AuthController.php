@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\RecipeList;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\User;
 
 class AuthController extends Controller
@@ -21,6 +21,7 @@ class AuthController extends Controller
             'password' => bcrypt($request->password)
         ]);
         $user->save();
+        RecipeList::create(['user_id' => $user->id]);
         return response()->json([
             'message' => 'Successfully created user!'
         ], 201);
